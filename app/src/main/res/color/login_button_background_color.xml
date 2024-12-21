@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 按下状态 -->
+    <item android:color="#456B88" android:state_pressed="true" />
+    <!-- 悬停状态 (对于触摸屏设备，这通常指的是聚焦状态) -->
+    <item android:color="#67A5D5" android:state_hovered="true" />
+    <!-- 默认状态 -->
+    <item android:color="@color/colorPrimary" />
+</selector>

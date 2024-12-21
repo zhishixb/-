@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="ShapeAppearanceOverlay.App.Circle" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+    <style name="AppTheme.InputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/colorPrimary</item> <!-- 设置边框颜色 -->
+        <item name="boxBackgroundColor">@android:color/white</item> <!-- 设置背景颜色 -->
+        <item name="hintTextAppearance">@style/AppTheme.HintText</item> <!-- 设置提示文本样式 -->
+    </style>
+
+    <style name="AppTheme.HintText" parent="TextAppearance.Design.Hint">
+        <item name="android:textColor">@android:color/darker_gray</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+</resources>
