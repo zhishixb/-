@@ -6,12 +6,13 @@
     android:padding="8dp">
 
     <!-- 图片块 -->
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/imageView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
+        app:shapeAppearanceOverlay="@style/RoundedImageViewStyle"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -41,14 +42,14 @@
             android:layout_marginStart="8dp"
             android:layout_marginBottom="8dp"/>
 
-        <!-- 头像小色块 -->
-        <View
+        <!-- 头像小图标 -->
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/avatarBlock"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:background="@drawable/bg_avatar_circle"
             android:contentDescription="@string/avatar_description"
-            android:backgroundTint="#FF4081"
+            app:shapeAppearanceOverlay="@style/CircleImageViewStyle"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/titleTextView"
             android:layout_marginStart="8dp"

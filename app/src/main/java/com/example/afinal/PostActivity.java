@@ -52,7 +52,7 @@ public class PostActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_post);
+        setContentView(R.layout.fragment_post);
 
         // 初始化视图
         titleEditText = findViewById(R.id.titleEditText);
@@ -130,11 +130,6 @@ public class PostActivity extends AppCompatActivity {
     private void uploadPost() {
         String title = titleEditText.getText().toString().trim();
         String content = contentEditText.getText().toString().trim();
-
-//        if (title.isEmpty() || content.isEmpty()) {
-//            Toast.makeText(this, "标题和内容不能为空", Toast.LENGTH_SHORT).show();
-//            return;
-//        }
 
         //判断图片是否选择
         if (imageUri == null) {

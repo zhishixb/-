@@ -1,0 +1,15 @@
+<!-- bottom_nav_menu.xml -->
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navigation_home"
+        android:icon="@drawable/ic_home"
+        android:title="首页" />
+    <item
+        android:id="@+id/navigation_post"
+        android:icon="@drawable/ic_post"
+        android:title="发帖" />
+    <item
+        android:id="@+id/navigation_space"
+        android:icon="@drawable/ic_post"
+        android:title="发帖" />
+</menu>

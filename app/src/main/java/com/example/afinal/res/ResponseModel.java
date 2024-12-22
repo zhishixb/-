@@ -30,7 +30,6 @@ public class ResponseModel {
     }
 
     public List<Post> getData() {
-        Log.d("Posts", data.toString());
         return data;
     }
 

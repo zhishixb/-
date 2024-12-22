@@ -1,5 +1,6 @@
 package com.example.afinal;
 
+import android.content.Intent;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
@@ -106,11 +107,13 @@ public class LoginFragment extends Fragment {
                             db.userDao().insert(user);
                             // 设置当前用户
                             ((MyApplication) getActivity().getApplication()).setCurrentUser(user);
-                            getActivity().runOnUiThread(() -> Toast.makeText(getContext(), "新用户 " + data + " 你好!", Toast.LENGTH_SHORT).show());
+                            final String welcomeMessage = "新用户 " + data + " 你好!";
+                            handleSuccessfulLogin(welcomeMessage, user);
                         } else {
                             // 设置当前用户
                             ((MyApplication) getActivity().getApplication()).setCurrentUser(user);
-                            getActivity().runOnUiThread(() -> Toast.makeText(getContext(), "欢迎回来, " + data + "!", Toast.LENGTH_SHORT).show());
+                            final String welcomeMessage = "欢迎回来, " + data + "!";
+                            handleSuccessfulLogin(welcomeMessage, user);
                         }
                     } else {
                         getActivity().runOnUiThread(() -> Toast.makeText(getContext(), "登录失败: " + message, Toast.LENGTH_SHORT).show());
@@ -119,6 +122,22 @@ public class LoginFragment extends Fragment {
                     e.printStackTrace();
                     getActivity().runOnUiThread(() -> Toast.makeText(getContext(), "解析响应失败.", Toast.LENGTH_SHORT).show());
                 }
+            }
+        });
+    }
+
+    private void handleSuccessfulLogin(final String message, final User user) {
+        // 在UI线程上显示消息并跳转到AppActivity
+        getActivity().runOnUiThread(() -> {
+            Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+
+            // 启动AppActivity
+            Intent intent = new Intent(getContext(), AppActivity.class);
+            startActivity(intent);
+
+            // 如果不再需要登录界面，可以考虑关闭它
+            if (getActivity() != null) {
+                getActivity().finish(); // 关闭当前活动（通常是包含这个Fragment的Activity）
             }
         });
     }

@@ -2,4 +2,5 @@
     <string name="app_name">Final</string>
     <string name="avatar_description">Avatar Image</string>
     <string name="image_preview_description">帖子图片预览</string>
+    <string name="preview_avatar_description">头像预览</string>
 </resources>

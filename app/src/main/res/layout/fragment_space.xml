@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <!-- 头像小图标 -->
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/avatarImageView"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        app:shapeAppearanceOverlay="@style/CircleImageViewStyle"
+        android:contentDescription="@string/avatar_description"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="8dp"/>
+
+    <!-- 显示昵称的TextView -->
+    <TextView
+        android:id="@+id/nicknameTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="当前昵称"
+        android:textAppearance="?attr/textAppearanceSubtitle1"
+        app:layout_constraintTop_toBottomOf="@id/avatarImageView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="25dp"
+        android:layout_marginTop="8dp"/>
+
+    <!-- 预览选择的头像框 -->
+
+    <!-- 切换头像按钮 -->
+
+    <!-- 确认按钮 -->
+
+    <!-- 输入框 -->
+
+    <!-- 修改昵称按钮 -->
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/previewAvatarImageView"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="76dp"
+        android:contentDescription="@string/preview_avatar_description"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/nicknameTextView"
+        app:shapeAppearanceOverlay="@style/CircleImageViewStyle" />
+
+    <Button
+        android:id="@+id/changeAvatarButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="84dp"
+        android:text="切换头像"
+        app:layout_constraintStart_toEndOf="@id/previewAvatarImageView"
+        app:layout_constraintTop_toBottomOf="@id/nicknameTextView" />
+
+    <Button
+        android:id="@+id/confirmButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="84dp"
+        android:text="确认"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@id/changeAvatarButton"
+        app:layout_constraintTop_toBottomOf="@id/nicknameTextView" />
+
+    <EditText
+        android:id="@+id/nicknameEditText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="92dp"
+        android:hint="输入新昵称"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toStartOf="@id/changeNicknameButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/changeAvatarButton" />
+
+    <Button
+        android:id="@+id/changeNicknameButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="92dp"
+        android:text="修改昵称"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/nicknameEditText"
+        app:layout_constraintTop_toBottomOf="@id/changeAvatarButton" />
+</androidx.constraintlayout.widget.ConstraintLayout>

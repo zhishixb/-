@@ -4,6 +4,7 @@
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">50%</item>
     </style>
+
     <style name="AppTheme.InputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="boxStrokeColor">@color/colorPrimary</item> <!-- 设置边框颜色 -->
         <item name="boxBackgroundColor">@android:color/white</item> <!-- 设置背景颜色 -->
@@ -13,5 +14,15 @@
     <style name="AppTheme.HintText" parent="TextAppearance.Design.Hint">
         <item name="android:textColor">@android:color/darker_gray</item>
         <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="RoundedImageViewStyle">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">8dp</item> <!-- 根据需要调整圆角大小 -->
+    </style>
+
+    <style name="CircleImageViewStyle">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item> <!-- 设置为50%以确保圆形象 -->
     </style>
 </resources>

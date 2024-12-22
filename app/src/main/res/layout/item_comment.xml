@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="8dp">
+
+    <!-- 头像 -->
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/commentAvatarImageView"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        app:shapeAppearanceOverlay="@style/CircleImageViewStyle"
+        android:contentDescription="@string/avatar_description"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- 昵称 -->
+    <TextView
+        android:id="@+id/commenterNameTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="评论者名称"
+        android:textAppearance="?attr/textAppearanceSubtitle1"
+        app:layout_constraintStart_toEndOf="@+id/commentAvatarImageView"
+        app:layout_constraintTop_toTopOf="@+id/commentAvatarImageView"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginLeft="20dp"
+        android:layout_marginVertical="6dp"
+        android:paddingStart="8dp"/>
+
+    <!-- 内容 -->
+    <TextView
+        android:id="@+id/commentContentTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="评论内容"
+        android:textAppearance="?attr/textAppearanceBody1"
+        app:layout_constraintTop_toBottomOf="@+id/commenterNameTextView"
+        app:layout_constraintStart_toStartOf="@+id/commenterNameTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginVertical="10dp"
+        android:paddingStart="8dp"
+        android:paddingTop="4dp"/>
+
+    <!-- 时间 -->
+    <TextView
+        android:id="@+id/commentTimeTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2024-12-20 12:28"
+        android:textAppearance="?attr/textAppearanceCaption"
+        app:layout_constraintTop_toBottomOf="@+id/commentContentTextView"
+        app:layout_constraintStart_toStartOf="@+id/commentContentTextView"
+        android:layout_marginVertical="10dp"
+        android:paddingStart="8dp"
+        android:paddingTop="4dp"/>
+
+    <!-- 分割线 -->
+    <View
+        android:id="@+id/divider"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintTop_toBottomOf="@+id/commentTimeTextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

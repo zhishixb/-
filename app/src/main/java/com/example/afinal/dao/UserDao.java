@@ -16,4 +16,7 @@ public interface UserDao {
 
     @Query("SELECT nick_name FROM users WHERE user_name = :username")
     String getNickNameByUsername(String username);
+
+    @Query("SELECT avatar FROM users WHERE user_name = :username")
+        Integer getAvatar(String username);
 }

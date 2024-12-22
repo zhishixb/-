@@ -56,4 +56,6 @@ dependencies {
     //图片处理
     implementation ("com.github.bumptech.glide:glide:4.12.0")
     annotationProcessor ("com.github.bumptech.glide:compiler:4.12.0")
+    //组件库
+    implementation ("com.google.android.material:material:<latest_version>")
 }

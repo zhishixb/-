@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.afinal.R;
 import com.example.afinal.dao.UserDao;
 import com.example.afinal.database.AppDatabase;
@@ -28,8 +29,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ImageViewHolde
     private static final String TAG = "PostAdapter"; // 用于日志标签
     private List<Post> posts;
     private Context context;
+    private AppDatabase db; //sqlite操作类
     private AdapterView.OnItemClickListener listener; // 添加监听器实现点击item得页面跳转
     private static final String BASE_IMAGE_URL = "http://10.0.2.2:8099/common/download?name=";
+    private static final String BASE_AVATAR_URL = "http://10.0.2.2:8099/avatar/download?name=";
 
     // 定义一个接口用于处理点击事件
     public interface OnItemClickListener {
@@ -41,6 +44,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ImageViewHolde
     public PostAdapter(Context context, List<Post> posts) {
         this.context = context;
         this.posts = posts;
+        this.db = AppDatabase.getInstance(context.getApplicationContext());
     }
 
     // 提供一个方法来设置监听器
@@ -59,11 +63,13 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ImageViewHolde
     public void onBindViewHolder(@NonNull ImageViewHolder holder, int position) {
         final Post post = posts.get(position);
 
-        Log.d("PostContent", post.getTitle());
+        //为了实时加载绕过glide的磁盘和内存缓存
         // 构造图片 URL 并加载图片
         String imageUrl = BASE_IMAGE_URL + post.getId();
         Glide.with(context)
                 .load(imageUrl)
+                .skipMemoryCache(true) // 禁用内存缓存
+                .diskCacheStrategy(DiskCacheStrategy.NONE) // 不使用磁盘缓存
                 .into(holder.imageView);
 
         holder.titleTextView.setText(post.getTitle());
@@ -71,14 +77,28 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ImageViewHolde
         // 设置默认文本
         holder.nicknameTextView.setText("加载中...");
 
-        // 异步获取昵称并更新UI
+        // 使用 Executor 创建单线程操作，来运行数据库查询
         Executor executor = Executors.newSingleThreadExecutor();
         executor.execute(() -> {
-            // 这里假设有一个获取用户昵称的方法，你需要根据实际情况调整
-            String nickname = "UserNickname"; // 例如：从数据库或网络请求中获取
+            UserDao userDao = db.userDao();
 
-            // 更新UI线程上的TextView
+            // 异步获取昵称和头像ID
+            Integer avatarId = userDao.getAvatar(post.getUsername());
+            String nickname = userDao.getNickNameByUsername(post.getUsername());
+
+            // 更新UI线程上的TextView和ImageView
             holder.itemView.post(() -> {
+                if (avatarId != null) {
+                    String avatarUrl = BASE_AVATAR_URL + avatarId;
+                    Glide.with(context)
+                            .load(avatarUrl)
+                            .skipMemoryCache(true) // 禁用内存缓存
+                            .diskCacheStrategy(DiskCacheStrategy.NONE) // 不使用磁盘缓存
+                            .into(holder.avatarBlock);
+                } else {
+                    Log.w(TAG, "Failed to retrieve avatar for username: " + post.getUsername());
+                }
+
                 if (nickname != null && !nickname.isEmpty()) {
                     holder.nicknameTextView.setText(nickname);
                     holder.nicknameTextView.setTextColor(context.getResources().getColor(android.R.color.black)); // 正常颜色
@@ -106,12 +126,14 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ImageViewHolde
     static class ImageViewHolder extends RecyclerView.ViewHolder {
         ImageView imageView;
         TextView titleTextView;
+        ImageView avatarBlock;
         TextView nicknameTextView;
 
         ImageViewHolder(@NonNull View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.imageView);
             titleTextView = itemView.findViewById(R.id.titleTextView);
+            avatarBlock = itemView.findViewById(R.id.avatarBlock);
             nicknameTextView = itemView.findViewById(R.id.nicknameTextView); // 确保 item_block.xml 中有这个 ID
         }
     }

@@ -1,18 +1,14 @@
 package com.example.afinal.res;
+//用于处理comment的信息返回
 
-import com.example.afinal.entity.Post;
-import com.google.gson.annotations.SerializedName;
+import com.example.afinal.entity.Comment;
 
-public class PostResponse {
+import java.util.List;
 
-    @SerializedName("code")
+public class CommentResponse {
     private int code;
-
-    @SerializedName("message")
     private String message;
-
-    @SerializedName("data")
-    private Post data;
+    private List<Comment> data;
 
     // Getter 和 Setter 方法
     public int getCode() {
@@ -31,16 +27,11 @@ public class PostResponse {
         this.message = message;
     }
 
-    public Post getData() {
+    public List<Comment> getData() {
         return data;
     }
 
-    public void setData(Post data) {
+    public void setData(List<Comment> data) {
         this.data = data;
-    }
-
-    // 用于显示成功的消息
-    public boolean isSuccess() {
-        return code == 200 && "成功".equals(message);
     }
 }
