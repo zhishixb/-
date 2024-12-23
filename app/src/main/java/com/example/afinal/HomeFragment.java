@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -27,8 +29,10 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class HomeFragment extends Fragment {
-
+    ImageButton refreshButton;
+    private RecyclerView recyclerView;
     private static final String BASE_URL = "http://10.0.2.2:8099/post/all";
+    OkHttpClient client = new OkHttpClient();
     private Gson gson = new Gson();
 
     @Nullable
@@ -41,8 +45,15 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        refreshButton = requireView().findViewById(R.id.refreshButton);
+        recyclerView = requireView().findViewById(R.id.recyclerView);
+
+        fetchData();
+        refreshButton.setOnClickListener(v -> fetchData());
+    }
+
+    private void fetchData() {
         // 发起网络请求
-        OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder().url(BASE_URL).build();
         client.newCall(request).enqueue(new Callback() {
             @Override
@@ -60,7 +71,11 @@ public class HomeFragment extends Fragment {
                         final List<Post> posts = responseModel.getData();
                         requireActivity().runOnUiThread(() -> {
                             if (isAdded()) { // 检查Fragment是否已添加到Activity
-                                setupRecyclerView(posts);
+                                if(posts!=null){
+                                    setupRecyclerView(posts);
+                                }else{
+                                    Toast.makeText(getContext(), "暂无内容", Toast.LENGTH_SHORT).show();
+                                }
                             }
                         });
                     }
@@ -70,7 +85,6 @@ public class HomeFragment extends Fragment {
     }
 
     private void setupRecyclerView(List<Post> posts) {
-        RecyclerView recyclerView = requireView().findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(
                 2, // 每一行显示2个子项
                 StaggeredGridLayoutManager.VERTICAL // 子项垂直排列

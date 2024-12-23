@@ -1,8 +1,10 @@
 package com.example.afinal.dao;
 
+import androidx.annotation.NonNull;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import com.example.afinal.entity.User;
 
@@ -19,4 +21,7 @@ public interface UserDao {
 
     @Query("SELECT avatar FROM users WHERE user_name = :username")
         Integer getAvatar(String username);
+
+    @Update
+    void update(User user);
 }

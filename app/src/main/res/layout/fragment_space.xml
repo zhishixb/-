@@ -31,16 +31,6 @@
         android:textSize="25dp"
         android:layout_marginTop="8dp"/>
 
-    <!-- 预览选择的头像框 -->
-
-    <!-- 切换头像按钮 -->
-
-    <!-- 确认按钮 -->
-
-    <!-- 输入框 -->
-
-    <!-- 修改昵称按钮 -->
-
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/previewAvatarImageView"
         android:layout_width="60dp"

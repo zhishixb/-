@@ -2,6 +2,7 @@ package com.example.afinal;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -29,6 +30,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.afinal.R;
 import com.example.afinal.application.MyApplication;
+import com.example.afinal.entity.Post;
 import com.example.afinal.entity.User;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -79,8 +81,6 @@ public class PostFragment extends Fragment {
         imagePreview = view.findViewById(R.id.imagePreview);
         Button selectImageButton = view.findViewById(R.id.selectImageButton);
         Button postButton = view.findViewById(R.id.submitButton);
-
-        myApp = (MyApplication) getActivity().getApplication();
 
         // 设置选择图片按钮点击事件
         selectImageButton.setOnClickListener(v -> openImagePicker());
@@ -184,11 +184,19 @@ public class PostFragment extends Fragment {
                             .build())
                     .build();
 
+            // 显示进度对话框
+            final ProgressDialog progressDialog = new ProgressDialog(getContext());
+            progressDialog.setMessage("正在上传...");
+            progressDialog.show();
+
             // 执行异步上传请求
             client.newCall(request).enqueue(new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
-                    runOnUiThread(() -> Toast.makeText(PostFragment.this.getContext(), "上传失败：" + e.getMessage(), Toast.LENGTH_SHORT).show());
+                    runOnUiThread(() -> {
+                        progressDialog.dismiss();
+                        Toast.makeText(PostFragment.this.getContext(), "上传失败：" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    });
                 }
 
                 @Override
@@ -203,6 +211,7 @@ public class PostFragment extends Fragment {
 
                             runOnUiThread(() -> {
                                 if (code == 200) {
+                                    progressDialog.dismiss();
                                     Toast.makeText(PostFragment.this.getContext(), "上传成功: " + message, Toast.LENGTH_SHORT).show();
                                     sendPost(title, content);
                                 } else {
@@ -211,10 +220,16 @@ public class PostFragment extends Fragment {
                             });
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            runOnUiThread(() -> Toast.makeText(PostFragment.this.getContext(), "解析响应失败：" + e.getMessage(), Toast.LENGTH_SHORT).show());
+                            runOnUiThread(() -> {
+                                progressDialog.dismiss();
+                                Toast.makeText(PostFragment.this.getContext(), "解析响应失败：" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            });
                         }
                     } else {
-                        runOnUiThread(() -> Toast.makeText(PostFragment.this.getContext(), "上传失败：" + response.message(), Toast.LENGTH_SHORT).show());
+                        runOnUiThread(() -> {
+                            progressDialog.dismiss();
+                            Toast.makeText(PostFragment.this.getContext(), "上传失败：" + response.message(), Toast.LENGTH_SHORT).show();
+                        });
                     }
                 }
             });
@@ -225,7 +240,11 @@ public class PostFragment extends Fragment {
     }
 
     private void sendPost(String title, String content) {
+        myApp = (MyApplication) getActivity().getApplication();
         User currentUser = myApp.getCurrentUser();
+        if(currentUser != null){
+            Toast.makeText(PostFragment.this.getContext(), currentUser.getUser_name(), Toast.LENGTH_SHORT).show();
+        }
         // 创建 Post 对象
         Post post = new Post(title, currentUser.getUser_name(), content);
 
@@ -295,22 +314,10 @@ public class PostFragment extends Fragment {
         return result;
     }
 
+    //保障使用的时主线程
     private void runOnUiThread(Runnable action) {
         if (getActivity() != null) {
             getActivity().runOnUiThread(action);
-        }
-    }
-
-    // 假设 Post 类如下定义
-    static class Post {
-        private String title;
-        private String userName;
-        private String content;
-
-        Post(String title, String userName, String content) {
-            this.title = title;
-            this.userName = userName;
-            this.content = content;
         }
     }
 }

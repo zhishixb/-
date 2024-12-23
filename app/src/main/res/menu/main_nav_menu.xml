@@ -10,6 +10,6 @@
         android:title="发帖" />
     <item
         android:id="@+id/navigation_space"
-        android:icon="@drawable/ic_post"
-        android:title="发帖" />
+        android:icon="@drawable/ic_my"
+        android:title="我的" />
 </menu>

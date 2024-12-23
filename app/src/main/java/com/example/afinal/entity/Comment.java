@@ -14,6 +14,13 @@ public class Comment {
     public Comment() {
     }
 
+    //上传的构造函数
+    public Comment( int postId, String commenterName, String content) {
+        this.postId = postId;
+        this.commenterName = commenterName;
+        this.content = content;
+    }
+
     // 全参构造函数
     public Comment(int id, int postId, String commenterName, String content, String createTime) {
         this.id = id;
